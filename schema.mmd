@@ -1,0 +1,213 @@
+---
+    config:
+        layout: elk
+---
+classDiagram
+    Contrat --|>  Entreprise
+    Contrat --|> CotisationsEncaissées
+    Contrat --|> Adhérent
+    CotisationsEncaissées --> Adhérent
+    CotisationsEncaissées --> Compagnie
+    Compagnie --> Garantie
+    Contrat --|> Décompte
+    Décompte --|> Tarif
+    Décompte --|> Cotisation
+    Décompte --|> OPtionsTArifaires
+    Décompte --|> SinistresSAnté
+    Décompte --|> Acte
+    Décompte --|> Adhérent
+    Décompte --|> CotisationsEstimées
+    Adhérent --|> CotisationsEstimées
+    Adhérent --|> CotisationsEncaissées
+    Adhérent --|> SinistreDécès
+    Adhérent --|> SinistreSanté
+    Adhérent --|> Sinistre Arret de Travail
+    Adhérent --|> CatégoriePersonnel
+    Adhérent --|> Personne
+    Adhérent --|> HistoriqueADH
+    CotisationsEncaissées --|> Compagnie
+    CotisationsEncaissées --|> GroupeEN
+    GroupeEN --|> HistoriqueEN
+    GroupeEN --|> GroupeENLibelle
+    CotisationsEncaissées --|> ENCatégorie
+    Contrat --|> Produit
+    Contrat --|> Catégorie
+    Contrat --|> Agence
+    class  Entreprise{
+        ENTR_ID INT
+        ENTR_RAISON_SOCIALE VARCHAR 50 
+        ENTR_SIRET VARCHAR 15 
+        ENTR_CODE_APE VARCHAR 5 
+        ENTR_CODE_NAF VARCHAR 10 
+        ENTR_RUE_LIGNE1 VARCHAR 32 
+        ENTR_RUE_LIGNE2 VARCHAR 32 
+        ENTR_RUE_LIGNE3 VARCHAR 32 
+        ENTR_DPT VARCHAR 30 
+        ENTR_CP VARCHAR 10 
+        ENTR_VILLE VARCHAR 40 
+        ENTR_PAYS VARCHAR 40 
+    }
+    class  CatégorieEntreprise{
+        ENCA_ENTR_ID INT
+        ENCA_CATG_CODE VARCHAR 3 
+        ENCA_CODE_CCN VARCHAR 5 
+        ENCA_LIBELLE_CATG VARCHAR 30 
+        ENCA_LIBELLE_CCN VARCHAR 120 
+    }
+    class Contrat {
+        CNTR_ID INT
+        CNTR_ENTR_ID INT
+        CNTR_CATG_CODE VARCHAR 3 
+        CNTR_AGEN_ID SMALLINT
+        CNTR_PRDT_ID INT
+        CNTR_DATE_DEBUT DATE
+        CNTR_DATE_FIN DATE
+        CNTR_DATE_SUSPENSION DATE
+        CNTR_MOTIF_DEBUT VARCHAR 2 
+        CNTR_MOTIF_FIN VARCHAR 2 
+        CNTR_NUM_CHARGE_CPTE INT
+        CNTR_CHARGE_COMPTE VARCHAR 50 
+        CNTR_STATUT VARCHAR 3 
+        CNTR_RESPONSABLE VARCHAR 1 
+        CNTR_TERME_APPEL VARCHAR 1 
+        CNTR_ORDRE_DECPTAGE VARCHAR 3 
+        CNTR_ASSISTANCE VARCHAR 1 
+        CNTR_MODE_PAIEMENT VARCHAR 1 
+        CNTR_DATE_ARRETE DATE
+    }
+    class CotisationsEncaissées {
+        COEN_ID INT
+        COEN_CNTR_ID INT
+        COEN_ADHE_ID INT
+        COEN_COMP_ID SMALLINT
+        COEN_BRANCHE CHAR 1 
+        COEN_RISQUE CHAR 3 
+        COEN_SOUS_RISQUE CHAR 3 
+        COEN_MONTANT_HT DECIMAL 11,2 
+        COEN_MONTANT_TTC DECIMAL 11,2 
+        COEN_REVERSE CHAR 1 
+        COEN_DATE_PAIEMENT DATE
+        COEN_DATE_REVERS DATE
+        COEN_NUM_APPEL INT
+        COEN_PERIODE_REELLE SMALLINT
+        COEN_PERIODE SMALLINT
+        COEN_PERIODICITE CHAR 1 
+        COEN_DATE_DEBUT DATE
+        COEN_DATE_FIN DATE
+        COEN_CODE_ANOMALIE VARCHAR 10 
+        COEN_MONTANT_TRA DECIMAL 11,2 
+        COEN_MONTANT_TRB DECIMAL 11,2 
+        COEN_MONTANT_TRC DECIMAL 11,2 
+        COEN_COEFF_PER_INCPLT DECIMAL 7,4 
+        COEN_TABLE_PMSS VARCHAR 5 
+        COEN_ASS_TOTAL DECIMAL 15,2 
+        COEN_ASS_TRA DECIMAL 15,2 
+        COEN_ASS_TRB DECIMAL 15,2 
+        COEN_ASS_TRC DECIMAL 15,2 
+        COEN_IND_MULT DECIMAL 7,4 
+        COEN_ASS_DOT VARCHAR 4 
+        COEN_MONTANT_ASS_DOT DECIMAL 11,2 
+        COEN_TX_DOT DECIMAL 5,2 
+        COEN_MONTANT_DOT DECIMAL 9,2 
+        COEN_ORIGINE_TX_DOT CHAR 1 
+        COEN_ASS_COMM VARCHAR 4 
+        COEN_MONTANT_ASS_COM DECIMAL 11,2 
+        COEN_TX_COMM DECIMAL 5,2 
+        COEN_MONTANT_COMM DECIMAL 9,2 
+        COEN_ORIGINE_TX_COMM CHAR 1 
+        COEN_TX_TAXE DECIMAL 9,2 
+        COEN_DATE_ARRETE DATE
+    }
+    class Adhérent{
+        ADHE_ID INT
+        ADHE_CNTR_ID INT
+        ADHE_PERS_ID INT
+        ADHE_DATE_DEBUT DATE
+        ADHE_DATE_FIN DATE
+        ADHE_STATUT CHAR 3 
+        ADHE_MOTIF_DEBUT VARCHAR 5 
+        ADHE_MOTIF_FIN VARCHAR 5 
+        ADHE_MOD_PAIEMT CHAR 1 
+        ADHE_FREQ_PAIEMT CHAR 1 
+        ADHE_PARENT_ID INT
+        ADHE_VALIDE_DU DAT
+    }
+    class Personne{
+        PERS_ID INT
+        PERS_NUMERO INT
+        PERS_NUMERO_SS VARCHAR 15 
+        PERS_NOM VARCHAR 50 
+        PERS_PRENOM VARCHAR 50 
+        PERS_PATRONYME VARCHAR 50 
+        PERS_DATE_NAISS DATE
+        PERS_REGIME VARCHAR 2 
+        PERS_GRAND_REGIME VARCHAR 2 
+        PERS_SEXE VARCHAR 1 
+        PERS_TYPE VARCHAR 2 
+        PERS_RANG_JUMEAU SMALLINT
+        PERS_SITUATION_FAM VARCHAR 1 
+        PERS_TELETRANS VARCHAR 1 
+        PERS_ALERT_MAIL VARCHAR 3 
+        PERS_RUE_LIGNE1 VARCHAR 32 
+        PERS_RUE_LIGNE2 VARCHAR 32 
+        PERS_RUE_LIGNE3 VARCHAR 32 
+        PERS_CP VARCHAR 10 
+        PERS_VILLE VARCHAR 40 
+        PERS_PAYS VARCHAR 40 
+        PERS_EMAIL VARCHAR 50 
+        PERS_TEL_FIXE VARCHAR 25 
+        PERS_TEL_MOBILE VARCHAR 25 
+        PERS_PARENT_ID INT
+        PERS_DATE_CREATION DAT
+    }
+    
+    class CatégoriePersonnel{
+        DTWADHE_ADHE_ID INT
+        CATP_DATE_DEF INT
+        CATP_SEQUENCE SMALLINT
+        CATP_NB_CARTE SMALLINT
+        CATP_DATE_DEBUT DATE
+        CATP_DATE_FIN DATE
+        CATP_DATE_DEP DATE
+    }
+    class Acte{
+        ACTE_CODE VARCHAR 5 
+        ACTE_SOUS_CODE VARCHAR 5 
+        ACTE_LIBELLE VARCHAR 65 
+        ACTE_GRANDE_FAMILLE VARCHAR 5…
+        ACTE_FAMILLE VARCHAR 50 
+        ACTE_FAMILLE_MAL VARCHAR 50 
+    }
+    class Agence{
+        AGEN_ID SMALLINT
+        AGEN_LIBELLE VARCHAR 50 
+        AGEN_PORTEFEUILLE VARCHAR 3 
+    }
+    class Produit{
+        PRDT_ID INT
+        PRDT_PRODUIT VARCHAR 15 
+        PRDT_OPTION VARCHAR 3 
+        PRDT_LIBELLE VARCHAR 50 
+        PRDT_LIBELLE_COURT VARCHAR 15 
+        PRDT_CODE_FAMILLE VARCHAR 3 
+        PRDT_FAMILLE VARCHAR 30 
+        PRDT_TYPE_GAMME VARCHAR 1 
+    }
+    class Catégorie{
+        CATG_CODE VARCHAR 3 
+        CATG_LIBELLE VARCHAR 50 
+        CATG_GRD_COLLEGE VARCHAR 3 
+        CATG_FAMILLE_COTI VARCHAR 3 
+    }
+    class Compagnie{
+        COMP_ID SMALLINT
+        COMP_LIBELLE VARCHAR 50
+    }
+    class Garantie{
+        GARA_ID INT
+        GARA_COMP_ID SMALLINT
+        GARA_RISQUE CHAR 3 
+        GARA_SS_RISQUE CHAR 3 
+        GARA_BRANCHE CHAR 1
+    }
+  
