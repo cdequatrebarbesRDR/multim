@@ -2,10 +2,11 @@
 
 ## Requirements 
 - [ ] Droits d'accès à la BDD via le VPN
-- [ ] Accès au réseau S://
-
+- [ ] Accès au réseau S:// à distance
+- [ ] Fichier d'exemple envoyé dans l'existant
 
 ## Contexte
+
 Contrat Assuré (PREV, MAL)
 appartient à 1 Plusieurs marques:
 * ROEDERER
@@ -21,11 +22,10 @@ Assuré A
 
 Site web: problème d'accès
 
-AS400 renvoie la 1ere ligne trouvée pour l'assuré 
-EXTRACTION à plat étant donné
+AS400 renvoie la 1ere ligne trouvée pour l'assuré  EXTRACTION à plat étant donné
 
-APPEL à l'API de l'INFOCENTRE
-
+## Proposition initiale: 
+APPEL à l'~API~ de l'INFOCENTRE
 
 Table Assuré "dtwpers"
 
@@ -33,7 +33,6 @@ adhe_cntr_id
 
 
 Personne > Assuré Contrat > Contrat Entreprise
-
 
 Numéro de personne (LOGIN ) Attention pas unique RANG Bénéficiaire RANG INT == 0 Assuré principal Salarié du client
 
@@ -76,6 +75,15 @@ GCAB GROUPE-ENTREPRISE-CATEGORIE-ASSURE_NB-B_RANG
 
 
 
+
+## Schema de l'infocentre
+
+* ![infocentre datamodel complet](./schema.mmd)
+* ![schema pour accès aux données contrats](./contrat.mmd)
+
+##  Propositions
+
+
 ## Compléments
 
 Que veut comme données le pole WEB a partir d'un N° Assuré? 
@@ -87,11 +95,13 @@ Que veut comme données le pole WEB a partir d'un N° Assuré?
 - Les numéros de contrats
 - Les services web IBA
 
-ENDPOINT Assurés Entreprise
+ENDPOINT Assurés Entreprise Proposés par le web cf. REUNION du 07/04
 
 - /assures/<NUMERO_ASSURE>/contrats
+- /assures/<NUMERO_ASSURE>/infos
 - /assures/<NUMERO_ASSURE>/services
 - /entreprise/<NUMERO_ENTREPRISE>/contrats
+- /entreprise/<NUMERO_ENTREPRISE>/infos
 - /entreprise/<NUMERO_ENTREPRISE>/services
 
 ? BENEFICAIRES => AS400
@@ -101,4 +111,12 @@ ENDPOINT Assurés Entreprise
 - CARTE "ValidationCode" <= AS400 check if valid with hash
 
 
-- Fichier d'exemple envoyé  
+
+Mais si respect des conventions de nommage REST 
+@c24b je propose
+
+* '/<N_ASSURE_OU_COMPAGNIE>' => infos
+* '/contrats/<N_ASSURE_OU_COMPAGNIE>' => contrats
+* '/services/<N_ASSURE_OU_COMPAGNIE>'=> ????
+* '/beneficiaires/<N_ASSURE_OU_COMPAGNIE>' => infos
+* 
